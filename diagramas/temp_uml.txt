@@ -1,0 +1,70 @@
+
+    @startuml
+class Competicao {
+    - id: int
+    - nome: String
+    - data: Date
+    - horario: Time
+    - local: String
+    - atletas: List<Atleta>
+    + cadastrarCompeticao(): void
+    + obterCompeticao(id: int): Competicao
+    + atualizarCompeticao(): void
+    + deletarCompeticao(id: int): void
+}
+
+class Atleta {
+    - id: int
+    - nome: String
+    - pais: String
+    + inscrever(): void
+    + obterAtleta(id: int): Atleta
+}
+
+class Local {
+    - id: int
+    - nome: String
+    - disponibilidade: Boolean
+    + alocarLocal(): void
+    + obterLocal(id: int): Local
+}
+
+class Resultado {
+    - id: int
+    - competicao: Competicao
+    - vencedor: Atleta
+    - segundo: Atleta
+    - terceiro: Atleta
+    + registrarResultado(): void
+    + obterResultado(id: int): Resultado
+}
+
+class RelatorioMedalhas {
+    - id: int
+    - pais: String
+    - ouro: int
+    - prata: int
+    - bronze: int
+    + gerarRelatorio(): void
+}
+
+class BancoDeDados {
+    + conectar(): void
+    + desconectar(): void
+    + executarQuery(query: String): ResultSet
+}
+
+Competicao "1" -- "*" Atleta: Inscritos
+Competicao "1" -- "1" Local: Ocorre em
+Competicao "1" -- "1" Resultado: Tem
+Resultado "1" -- "1" RelatorioMedalhas: Gera
+Competicao --> BancoDeDados : Usa
+Atleta --> BancoDeDados : Usa
+Local --> BancoDeDados : Usa
+Resultado --> BancoDeDados : Usa
+RelatorioMedalhas --> BancoDeDados : Usa
+@enduml
+
+
+
+    

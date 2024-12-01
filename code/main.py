@@ -5,7 +5,9 @@ from diagrama_uml import (
     diagrama_classes,
     diagrama_caso_de_uso,
     diagrama_estado,
-    diagrama_comunicacao
+    diagrama_comunicacao,
+    diagrama_arquitetura,
+    diagrama_implantacao
 )
 
 def menu():
@@ -17,6 +19,8 @@ def menu():
         print("4. Diagrama de Caso de Uso")
         print("5. Diagrama de Estado")
         print("6. Diagrama de Comunicação")
+        print("7. Diagrama de Arquitetura")
+        print("8. Diagrama de Implantação")
         print("0. Sair")
         
         escolha = input("Escolha uma opção: ")
@@ -39,6 +43,12 @@ def menu():
         elif escolha == '6':
             diagrama_comunicacao()
             print("Diagrama de Comunicação gerado como 'diagrama_comunicacao.png'.")
+        elif escolha == '7':
+            diagrama_arquitetura()
+            print("Diagrama de Arquitetura gerado como 'diagrama_arquitetura.png'.")
+        elif escolha == '8':
+            diagrama_implantacao()
+            print("Diagrama de Arquitetura gerado como 'diagrama_implantacao.png'.")
         elif escolha == '0':
             print("Saindo...")
             sys.exit()
