@@ -1,69 +1,34 @@
 
-    @startuml
-class Competicao {
-    - id: int
-    - nome: String
-    - data: Date
-    - horario: Time
-    - local: String
-    - atletas: List<Atleta>
-    + cadastrarCompeticao(): void
-    + obterCompeticao(id: int): Competicao
-    + atualizarCompeticao(): void
-    + deletarCompeticao(id: int): void
-}
+@startuml
+actor Atleta
+participant "Interface de Usuário" as IU
+participant "Sistema de Autenticação" as Auth
+participant "Sistema de Gestão" as SG
+database "Banco de Dados" as BD
 
-class Atleta {
-    - id: int
-    - nome: String
-    - pais: String
-    + inscrever(): void
-    + obterAtleta(id: int): Atleta
-}
+Atleta -> IU : Solicitar login
+IU -> Auth : Enviar credenciais de login
+Auth -> IU : Confirmar login
+IU -> Atleta : Login confirmado
 
-class Local {
-    - id: int
-    - nome: String
-    - disponibilidade: Boolean
-    + alocarLocal(): void
-    + obterLocal(id: int): Local
-}
+Atleta -> IU : Solicitar formulário de inscrição
+IU -> SG : Solicitar formulário de inscrição
+SG -> IU : Exibir formulário de inscrição
+IU -> Atleta : Exibir formulário
 
-class Resultado {
-    - id: int
-    - competicao: Competicao
-    - vencedor: Atleta
-    - segundo: Atleta
-    - terceiro: Atleta
-    + registrarResultado(): void
-    + obterResultado(id: int): Resultado
-}
-
-class RelatorioMedalhas {
-    - id: int
-    - pais: String
-    - ouro: int
-    - prata: int
-    - bronze: int
-    + gerarRelatorio(): void
-}
-
-class BancoDeDados {
-    + conectar(): void
-    + desconectar(): void
-    + executarQuery(query: String): ResultSet
-}
-
-Competicao "1" -- "*" Atleta: Inscritos
-Competicao "1" -- "1" Local: Ocorre em
-Competicao "1" -- "1" Resultado: Tem
-Resultado "1" -- "1" RelatorioMedalhas: Gera
-Competicao --> BancoDeDados : Usa
-Atleta --> BancoDeDados : Usa
-Local --> BancoDeDados : Usa
-Resultado --> BancoDeDados : Usa
-RelatorioMedalhas --> BancoDeDados : Usa
+Atleta -> IU : Preencher e enviar dados de inscrição
+IU -> SG : Enviar dados de inscrição
+SG -> SG : Validar dados de inscrição
+SG -> BD : Inserir dados de inscrição
+BD -> SG : Confirmar inserção de dados
+SG -> IU : Confirmar inscrição
+IU -> Atleta : Confirmação de inscrição
 @enduml
+
+
+
+
+
 
 
 

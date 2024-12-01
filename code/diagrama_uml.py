@@ -187,13 +187,28 @@ UC1 -> Atleta : Confirmação de inscrição
 def diagrama_estado():
     uml_code = """
 @startuml
-[*] --> CompetiçãoPlanejada
-CompetiçãoPlanejada --> CompetiçãoEmAndamento: Iniciar
-CompetiçãoEmAndamento --> CompetiçãoConcluída: Finalizar
-CompetiçãoConcluída --> ResultadosRegistrados: Registrar resultados
-ResultadosRegistrados --> RelatórioGerado: Gerar relatório de medalhas
-RelatórioGerado --> [*]
+[*] --> SolicitaçãoDeInscrição
+
+SolicitaçãoDeInscrição : Atleta solicita inscrição
+SolicitaçãoDeInscrição --> PreenchendoFormulario : Formulário de inscrição exibido
+
+PreenchendoFormulario : Atleta preenche os dados
+PreenchendoFormulario --> ValidandoDados : Dados enviados para validação
+
+ValidandoDados : Sistema valida os dados de inscrição
+ValidandoDados --> InserindoDadosNoBanco : Dados válidos
+ValidandoDados --> ErroDeValidacao : Dados inválidos
+
+InserindoDadosNoBanco : Sistema insere dados no banco de dados
+InserindoDadosNoBanco --> InscriçãoConfirmada : Dados inseridos com sucesso
+InscriçãoConfirmada : Sistema confirma a inscrição
+InscriçãoConfirmada --> [*]
+
+ErroDeValidacao : Sistema retorna erro de validação
+ErroDeValidacao --> PreenchendoFormulario : Atleta corrige os dados
 @enduml
+
+
 
 
     """
@@ -201,19 +216,37 @@ RelatórioGerado --> [*]
 
 def diagrama_comunicacao():
     uml_code = """
-   @startuml
+@startuml
 actor Atleta
-participant Sistema
-database DB
+participant "Interface de Usuário" as IU
+participant "Sistema de Autenticação" as Auth
+participant "Sistema de Gestão" as SG
+database "Banco de Dados" as BD
 
-Atleta -> Sistema: Solicitar inscrição
-Sistema -> Atleta: Formulário de inscrição
-Atleta -> Sistema: Enviar dados de inscrição
-Sistema -> Sistema: Validar dados
-Sistema -> DB: Inserir inscrição no banco de dados
-DB -> Sistema: Confirmação de inserção
-Sistema -> Atleta: Confirmação de inscrição
+Atleta -> IU : Solicitar login
+IU -> Auth : Enviar credenciais de login
+Auth -> IU : Confirmar login
+IU -> Atleta : Login confirmado
+
+Atleta -> IU : Solicitar formulário de inscrição
+IU -> SG : Solicitar formulário de inscrição
+SG -> IU : Exibir formulário de inscrição
+IU -> Atleta : Exibir formulário
+
+Atleta -> IU : Preencher e enviar dados de inscrição
+IU -> SG : Enviar dados de inscrição
+SG -> SG : Validar dados de inscrição
+SG -> BD : Inserir dados de inscrição
+BD -> SG : Confirmar inserção de dados
+SG -> IU : Confirmar inscrição
+IU -> Atleta : Confirmação de inscrição
 @enduml
+
+
+
+
+
+
 
 
     """

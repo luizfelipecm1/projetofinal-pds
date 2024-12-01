@@ -2,6 +2,8 @@
 
 `30/11/2024`
 
+Esse projeto foi realizado com base no Sistema de Gestão de Olímpiadas, apresentado pelo prof. Aramuni no começo do semestre, a intenção desse trabalho é representar o sistema com seus diagramas feito através da linguagem UML.
+
 ## 👨‍🏫 Professor
 
 - João Paulo Carneiro Aramuni
