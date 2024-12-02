@@ -9,9 +9,11 @@ Documento criado: [PDF](<PDS - Luiz Felipe Campos - SGO.pdf>)
 
 - João Paulo Carneiro Aramuni
 
-## 🧑‍🎓 Aluno
+## 🧑‍🎓 Alunos
 
 - Luiz Felipe Campos de Morais
+- Victor Reis Carlota
+- Marcus Vinicius Carvalho de Oliveira
 
 
 ## 📂 Estrutura de diretórios
